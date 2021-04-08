@@ -5,7 +5,7 @@
 syntax enable
 colorscheme brave-purple  
     
-" ================  Inicio Plugins ==============={{{
+" ==================== INICIO: Plugins ==================={{{
 call plug#begin('~/.vim/plugged')
 
 Plug 'mhinz/vim-startify' " Tela Inicial Personalizada
@@ -22,7 +22,7 @@ Plug 'scrooloose/syntastic'
 Plug 'ap/vim-css-color'
 
 call plug#end()
-" }}}================ Fim Plugins
+" }}}=================== Fim Plugins ======================
 
 " ============ INICIO: Configuração dos Plugins =========={{{
 
@@ -47,6 +47,8 @@ autocmd vimenter * NERDTree
 autocmd! VimEnter * NERDTree | wincmd w
 " Se o NERDTree for a unica coisa aberta, fecho o vim
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
+let NERDTreeWinSize=30
     
 " }}} ======================================================
 
@@ -73,7 +75,7 @@ let g:ctrlp_cmd = 'CtrlP'
 
 " }}}  ============ FIM: Configuração dos Plugins ==========
 
-" =========== Inicia da configuração com 'set'======== {{{
+" ============ INICIO: Configuração com 'set' ============{{{
 " set list lcs=tab:\|\  " Coloca um pipe na tabulação
 set shiftwidth=4 " Define o número de espaços ao auto identar
 set shiftround " Tamanhdo da tabulação usando shiftwidth como base                                  
@@ -84,7 +86,7 @@ set mouse=a " Habilita o mouse no terminal Vim
 set showmode "mostra o modo em que estamos
 set showcmd  "mostra no status os comandos inseridos
 set ts=4     "tamanho das tabulações
-set hls      "destaca com cores os termos procurados
+set hlsearch!      "destaca com cores os termos procurados
 set incsearch "habilita a busca incremental
 set autoindent "auto identação
 set wildmenu  " Abre caixa com opções ao dar TAB quando digita comando
@@ -106,13 +108,13 @@ set title 		"exibe o nome do arquivo em foco no top da janela do terminal
 set clipboard=unnamedplus "Permite copiar coisas de dentro para fora do vim e vice-versa                
 
 set showtabline=2 "O 2 indica que a Tab deve sempre aparecer, mesmo que houve apenas uma 
-set tabline=%!TabTeste() " Chamo a function que cria a Minha TAB
+set tabline=%!MyTabLine() " Chamo a function que cria a Minha TAB
 
 
 
- " }}} ================ Fim da configuração com 'set'
+ " }}} ================ Fim da configuração com 'set' ==============
 
-" ================= INICIO dos Mapeamentos =========={{{
+" ================ INICIO dos Mapeamentos ================{{{
 " Defino o CTRL como tecla líder ( ',' talvez seja melhor )
 let mapleader = ","
 
@@ -191,13 +193,17 @@ augroup END
 
 " }}}
 
+"============= Funções de MyTabLine ================={{{
 
 " Teste de configuração de TABLINE
 " Link dos icones : https://pt.piliapp.com/symbol/    e   https://unicode-table.com/pt/#2A2F
-function! TabTeste()
+function! MyTabLine()
 	let tabline = ''
-	
-	let tabline = '%30l ' 	
+
+	if (exists("g:NERDTree") && g:NERDTree.IsOpen())
+		let tree = g:NERDTreeWinSize
+		let tabline = '%'.tree.'N' 
+	endif
 	" For em numero de TABs
 	for i in range(tabpagenr('$'))
 		let tab = i+1
@@ -212,25 +218,21 @@ function! TabTeste()
 		let tabline .= ''.tab. '-'
 		let tabline .= (splitName != '' ? splitName.' ' : ' Sem nome ')
 		
-		
 		if splitIsModified
-			let tabline .= '✎ ❭'
-		else
-	    	let tabline .= (tab == tabpagenr() ? '%999X×%#TabLineSel#❭' : '%2X⨯%X %#TabLine#❭')
-	    	"let tabline .= (tab == tabpagenr() ? '%#TabLineSel#%999XX ' : '%3XX%X %#TabLine# ')
-		    "let tabline .= (tab == tabpagenr() ? '%999XX ' : '%XX%X ')
-		endif
-		"let tabline .= '%#TabLine#❭'
-	 
-
+			let tabline .= '✎ '
+		elseif tabpagenr('$') > 1
+	    	let tabline .= (tab == tabpagenr() ? '%999X×' : '%2X⨯%X ')
+		endif		                        
+	   
+		let tabline .= (tab == tabpagenr() ? '%#TabLineSel#❭' : '%#TabLine#❭')
 	endfor
 	
-
-  "  tabe .= '%#TabLineSel#'
 	let tabline .= '%#TabLineFill#'
 
 	return tabline
 endfunction 
+
+"}}} ============== Fim MyTabLine =====================
 
 
 function Terminal()
