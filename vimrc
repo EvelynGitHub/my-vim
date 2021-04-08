@@ -18,7 +18,7 @@ Plug 'ryanoasis/vim-devicons' " Icones da Arvore de Diretorios
 Plug 'sheerun/vim-polyglot' " Turbina a sytaxhiligth do vim
 Plug 'mileszs/ack.vim'
 "Plug 'ervandew/supertab'
-Plug 'zxqfl/tabnine-vim'
+"Plug 'zxqfl/tabnine-vim'
 Plug 'scrooloose/syntastic'
 Plug 'ap/vim-css-color'
 
@@ -77,6 +77,21 @@ let g:ctrlp_cmd = 'CtrlP'
 
 " }}}
 
+" ================ Configuração do Coc ================={{{
+inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>"
+inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+if exists('*complete_info')
+  inoremap <silent><expr> <cr> complete_info(['selected'])['selected'] != -1 ? "\<C-y>" : "\<C-g>u\<CR>"
+endif
+
+"Uso CTRL+Space para ativar o auto completar
+inoremap <silent><expr> <c-space> coc#refresh()
+inoremap <silent><expr> <NUL> coc#refresh()
+
+" }}}
+
 " }}}  ============ FIM: Configuração dos Plugins ==========
 
 " ============ INICIO: Configuração com 'set' ============{{{
@@ -130,7 +145,7 @@ nnoremap <F12> :source $MYVIMRC<cr>
 inoremap <F12> <esc>:source $MYVIMRC<cr>
 
 " Abre a caixa de auto completar
-inoremap <c-space> <c-x><c-o>
+"inoremap <c-space> <c-x><c-o>
 " Minimiza/Maximiza cpodigo
 nnoremap <space> za         
 " Sai do Vim
