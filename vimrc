@@ -250,6 +250,7 @@ function Terminal()
 	endif
 endfunction
 
-map <F10> :call Terminal()<cr>
+nnoremap <c-F10> :call Terminal()<cr>
+inoremap <c-F10> :call Terminal()<cr>
 autocmd TerminalOpen * if &buftype == 'terminal' | setlocal nobuflisted | endif
 
