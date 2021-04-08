@@ -15,13 +15,17 @@ Plug 'vim-airline/vim-airline-themes' " Temas para o de cima
 Plug 'ctrlpvim/ctrlp.vim' " Pesquisa em arvore de trabalho
 Plug 'scrooloose/nerdtree' " Arvore de diretórios
 Plug 'ryanoasis/vim-devicons' " Icones da Arvore de Diretorios
+Plug 'sheerun/vim-polyglot' " Turbina a sytaxhiligth do vim
 Plug 'mileszs/ack.vim'
-Plug 'ervandew/supertab'
+"Plug 'ervandew/supertab'
 Plug 'zxqfl/tabnine-vim'
 Plug 'scrooloose/syntastic'
 Plug 'ap/vim-css-color'
 
 call plug#end()
+"Plug = Intelisense do VSCode para Vim
+source ~/.vim/coc.nvimrc
+
 " }}}=================== Fim Plugins ======================
 
 " ============ INICIO: Configuração dos Plugins =========={{{
