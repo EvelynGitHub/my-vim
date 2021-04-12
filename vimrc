@@ -17,11 +17,12 @@ Plug 'scrooloose/nerdtree' " Arvore de diretórios
 Plug 'ryanoasis/vim-devicons' " Icones da Arvore de Diretorios
 Plug 'sheerun/vim-polyglot' " Turbina a sytaxhiligth do vim
 Plug 'mileszs/ack.vim'
+Plug 'mattn/emmet-vim' " suporte para código expandido. Ex: div>p 
 "Plug 'ervandew/supertab'
 "Plug 'zxqfl/tabnine-vim'
 Plug 'scrooloose/syntastic'
 Plug 'ap/vim-css-color'
-
+Plug 'turbio/bracey.vim', {'do': 'npm install --prefix server'}  " Equivalente ao Live Server do VSCode
 call plug#end()
 "Plug = Intelisense do VSCode para Vim
 source ~/.vim/coc.nvimrc
@@ -52,7 +53,7 @@ autocmd! VimEnter * NERDTree | wincmd w
 " Se o NERDTree for a unica coisa aberta, fecho o vim
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
-let NERDTreeWinSize=30
+let NERDTreeWinSize=25
     
 " }}} ======================================================
 
@@ -147,14 +148,14 @@ inoremap <F12> <esc>:source $MYVIMRC<cr>
 " Abre a caixa de auto completar
 "inoremap <c-space> <c-x><c-o>
 " Minimiza/Maximiza cpodigo
-nnoremap <space> za         
+nnoremap <space> za
 " Sai do Vim
 nnoremap q :q<CR>
 "inoremap <space> <esc>za i
 " Autocompletar parente
-inoremap ( ()<left>
-inoremap { {}<left><CR>
-inoremap [ []<left>
+"inoremap ( ()<left>
+"inoremap { {}<left><CR>
+"inoremap [ []<left>
 " Coloca Texto selecionado entre aspas duplas
 " nnoremap <leader>" viw<esc>a"<esc>bi"<esc>lel
 " nnoremap <leader>" v`><esc>a"<esc>`<i"<esc>lel
